@@ -150,7 +150,7 @@ export default function RoomScreen(game) {
       )}
 
       {phase === 'results' && (
-        <ResultsPanel resultData={resultData} username={username} onPlayAgain={dismissResults} />
+        <ResultsPanel resultData={resultData} username={username} paragraph={paragraph} onPlayAgain={dismissResults} />
       )}
     </div>
   );

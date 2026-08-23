@@ -157,7 +157,8 @@ export function useTypingEngine({ text, enabled, onComplete }) {
         if (buffer[i] === target[i]) curCorrect++;
       }
       const correctChars = doneChars + curCorrect;
-      const wpm = Math.round(correctChars / 5 / elapsedMin);
+      const correctWords = confirmed.length + (curCorrect === target.length && target.length > 0 ? 1 : 0);
+      const wpm = Math.round(correctWords / elapsedMin);
       const cpm = Math.round(correctChars / elapsedMin);
       const accuracy =
         totalKeystrokesRef.current > 0
