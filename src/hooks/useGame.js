@@ -26,6 +26,7 @@ export function useGame() {
   const [pendingAction, setPendingAction] = useState(null);
 
   const usernameRef = useRef('');
+  const intentionalDisconnectRef = useRef(false);
 
   /*
    * IMPORTANT:
@@ -100,6 +101,10 @@ export function useGame() {
 
     function onDisconnect() {
       setConnectionStatus('disconnected');
+
+      if (intentionalDisconnectRef.current) {
+        return;
+      }
 
       showToast(
         'Lost connection to the server. Trying to reconnect…',
@@ -450,6 +455,8 @@ export function useGame() {
      */
     joinSentRef.current = false;
 
+    intentionalDisconnectRef.current = true;
+
     /*
      * Your backend removes a player from a room on
      * socket disconnect, so preserve that behavior.
@@ -468,6 +475,8 @@ export function useGame() {
       if (!socket.connected) {
         socket.connect();
       }
+
+      intentionalDisconnectRef.current = false;
     }, 0);
   }, [resetToLanding]);
 
